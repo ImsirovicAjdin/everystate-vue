@@ -1,0 +1,59 @@
+{
+  "name": "@everystate/vue",
+  "version": "1.0.0",
+  "description": "EveryState Vue: Vue 3 adapter with provideStore, usePath, useIntent, useWildcard, useAsync composables",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "everystate-vue-self-test": "cli.js"
+  },
+  "keywords": [
+    "everystate",
+    "vue",
+    "vue3",
+    "state-management",
+    "composables",
+    "provide-inject",
+    "event-driven",
+    "dot-path",
+    "external-store",
+    "adapter"
+  ],
+  "author": {
+    "name": "Ajdin Imsirovic",
+    "url": "https://www.linkedin.com/in/ajdin-imsirovic"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ImsirovicAjdin/everystate-vue"
+  },
+  "homepage": "https://github.com/ImsirovicAjdin/everystate-vue",
+  "peerDependencies": {
+    "@everystate/core": "file:../everystate-core",
+    "vue": ">=3.0.0"
+  },
+  "scripts": {
+    "test": "node self-test.js",
+    "self-test": "node self-test.js",
+    "test:integration": "node tests/vue.test.js",
+    "test:i": "node tests/vue.test.js"
+  },
+  "devDependencies": {
+    "@everystate/test": "^1.0.0"
+  },
+  "files": [
+    "*.js",
+    "*.d.ts",
+    "*.md",
+    "cli.js",
+    "tests/"
+  ],
+  "exports": {
+    ".": {
+      "import": "./index.js",
+      "types": "./index.d.ts"
+    }
+  }
+}
