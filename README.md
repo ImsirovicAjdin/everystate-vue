@@ -1,4 +1,7 @@
-# @everystate/vue v1.0.1
+# @everystate/vue v1.0.3
+
+[![Tests](https://github.com/ImsirovicAjdin/everystate-vue/actions/workflows/tests.yml/badge.svg)](https://github.com/ImsirovicAjdin/everystate-vue/actions/workflows/tests.yml)
+[![npm](https://img.shields.io/npm/v/@everystate/vue)](https://www.npmjs.com/package/@everystate/vue)
 
 **Vue 3 adapter for EveryState with composables**
 
