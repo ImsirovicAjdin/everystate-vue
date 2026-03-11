@@ -174,6 +174,120 @@ const results = runTests({
     const types = t.getTypeAssertions();
     if (types.length !== 3) throw new Error(`Expected 3 type assertions, got ${types.length}`);
   },
+
+  // -- Edge cases ---------------------------------------------------------
+
+  'edge: setting same value still notifies subscribers': () => {
+    const store = createEveryState({ count: 1 });
+    let fires = 0;
+    store.subscribe('count', () => { fires++; });
+    store.set('count', 1);
+    store.set('count', 1);
+    if (fires !== 2) throw new Error(`Expected 2 fires, got ${fires}`);
+    store.destroy();
+  },
+
+  'edge: deep path auto-creates intermediate objects': () => {
+    // Verify that setting a deeply nested path on an empty store
+    // creates the full chain of parent objects automatically
+    const store = createEveryState({});
+    store.set('a.b.c.d', 'deep');
+    if (store.get('a.b.c.d') !== 'deep') throw new Error('Deep path not created');
+    if (typeof store.get('a.b.c') !== 'object') throw new Error('Intermediate c not an object');
+    if (typeof store.get('a.b') !== 'object') throw new Error('Intermediate b not an object');
+    store.destroy();
+  },
+
+  'edge: set null is a valid value': () => {
+    const store = createEveryState({ data: { items: [1, 2, 3] } });
+    store.set('data.items', null);
+    if (store.get('data.items') !== null) throw new Error('Expected null');
+    store.destroy();
+  },
+
+  'edge: set undefined is a valid value': () => {
+    const store = createEveryState({ flag: true });
+    store.set('flag', undefined);
+    if (store.get('flag') !== undefined) throw new Error('Expected undefined');
+    store.destroy();
+  },
+
+  'edge: multiple subscribers on same path fire independently': () => {
+    const store = createEveryState({ x: 0 });
+    let firesA = 0;
+    let firesB = 0;
+    const unsubA = store.subscribe('x', () => { firesA++; });
+    const unsubB = store.subscribe('x', () => { firesB++; });
+
+    store.set('x', 1);
+    if (firesA !== 1 || firesB !== 1) throw new Error('Both should fire once');
+
+    // Unsubscribing one does not affect the other
+    unsubA();
+    store.set('x', 2);
+    if (firesA !== 1) throw new Error('A should stay at 1 after unsub');
+    if (firesB !== 2) throw new Error('B should fire again');
+
+    unsubB();
+    store.destroy();
+  },
+
+  'edge: get/set after destroy throws': () => {
+    // Important for onBeforeUnmount timing: if a component tries to
+    // read/write after the store is destroyed, it should fail loudly
+    // rather than silently corrupt state
+    const store = createEveryState({ x: 1 });
+    store.destroy();
+
+    let getThrew = false;
+    try { store.get('x'); } catch { getThrew = true; }
+    if (!getThrew) throw new Error('get() should throw after destroy');
+
+    let setThrew = false;
+    try { store.set('x', 2); } catch { setThrew = true; }
+    if (!setThrew) throw new Error('set() should throw after destroy');
+  },
+
+  'edge: subscribe after destroy throws': () => {
+    const store = createEveryState({ x: 1 });
+    store.destroy();
+
+    let threw = false;
+    try { store.subscribe('x', () => {}); } catch { threw = true; }
+    if (!threw) throw new Error('subscribe() should throw after destroy');
+  },
+
+  'edge: realistic Vue app state shape': () => {
+    // A full Vue app with auth, routing, entities, and UI state
+    const t = createEventTest({
+      auth: { user: null, token: null, isAuthenticated: false },
+      router: { view: 'home', path: '/', params: {} },
+      entities: { posts: {}, comments: {} },
+      ui: { theme: 'dark', sidebarOpen: false, modal: null, loading: false },
+    });
+
+    // Simulate login flow
+    t.trigger('auth.user', { id: 1, name: 'Alice', role: 'admin' });
+    t.trigger('auth.token', 'jwt-abc-123');
+    t.trigger('auth.isAuthenticated', true);
+    t.assertPath('auth.isAuthenticated', true);
+    t.assertShape('auth.user', { id: 'number', name: 'string', role: 'string' });
+
+    // Simulate route change
+    t.trigger('router.view', 'dashboard');
+    t.trigger('router.path', '/dashboard');
+    t.assertPath('router.view', 'dashboard');
+
+    // Simulate entity loading
+    t.trigger('entities.posts', { p1: { title: 'Hello', body: 'World' } });
+    t.assertShape('entities.posts.p1', { title: 'string', body: 'string' });
+
+    // Simulate UI toggles
+    t.trigger('ui.sidebarOpen', true);
+    t.trigger('ui.modal', 'confirm-delete');
+    t.assertPath('ui.modal', 'confirm-delete');
+    t.assertType('ui.loading', 'boolean');
+  },
 });
 
 if (results.failed > 0) process.exit(1);
