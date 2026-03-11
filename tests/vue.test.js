@@ -79,7 +79,7 @@ const results = runTests({
 
   // -- useAsync patterns ------------------------------------------------
 
-  'useAsync: loading → success lifecycle': async () => {
+  'useAsync: loading -> success lifecycle': async () => {
     const store = createEveryState({});
     await store.setAsync('users', async () => [{ id: 1, name: 'Alice' }]);
     if (store.get('users.status') !== 'success') throw new Error('Expected success');
@@ -87,7 +87,7 @@ const results = runTests({
     store.destroy();
   },
 
-  'useAsync: loading → error lifecycle': async () => {
+  'useAsync: loading -> error lifecycle': async () => {
     const store = createEveryState({});
     try {
       await store.setAsync('data', async () => { throw new Error('fail'); });

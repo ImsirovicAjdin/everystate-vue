@@ -21,10 +21,10 @@ let failed = 0;
 
 function assert(label, condition) {
   if (condition) {
-    console.log(`  ✓ ${label}`);
+    console.log(`  [PASS] ${label}`);
     passed++;
   } else {
-    console.error(`  ✗ ${label}`);
+    console.error(`  [FAIL] ${label}`);
     failed++;
   }
 }
@@ -180,8 +180,8 @@ s8.destroy();
 
 console.log(`\n@everystate/vue v1.0.0 self-test`);
 if (failed > 0) {
-  console.error(`✗ ${failed} assertion(s) failed, ${passed} passed`);
+  console.error(`[FAIL] ${failed} assertion(s) failed, ${passed} passed`);
   process.exit(1);
 } else {
-  console.log(`✓ ${passed} assertions passed`);
+  console.log(`[PASS] ${passed} assertions passed`);
 }

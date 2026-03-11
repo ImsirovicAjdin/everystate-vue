@@ -34,7 +34,7 @@ No Vue runtime is needed - the test exercises the store layer only.
     await import('./self-test.js');
   } catch (err) {
     if (err.code === 'ERR_MODULE_NOT_FOUND') {
-      console.error('\n✗ Missing dependency. Make sure @everystate/core is installed:');
+      console.error('\n[FAIL] Missing dependency. Make sure @everystate/core is installed:');
       console.error('  npm install @everystate/core\n');
       process.exit(1);
     }
