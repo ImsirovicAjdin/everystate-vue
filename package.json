@@ -1,6 +1,6 @@
 {
   "name": "@everystate/vue",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "EveryState Vue: Vue 3 adapter with provideStore, usePath, useIntent, useWildcard, useAsync composables",
   "type": "module",
   "main": "index.js",
@@ -31,7 +31,7 @@
   },
   "homepage": "https://github.com/ImsirovicAjdin/everystate-vue",
   "peerDependencies": {
-    "@everystate/core": "file:../everystate-core",
+    "@everystate/core": ">=1.0.0",
     "vue": ">=3.0.0"
   },
   "scripts": {
@@ -41,6 +41,7 @@
     "test:i": "node tests/vue.test.js"
   },
   "devDependencies": {
+    "@everystate/core": "^1.0.0",
     "@everystate/test": "^1.0.0"
   },
   "files": [

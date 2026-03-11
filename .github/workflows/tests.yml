@@ -22,11 +22,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Self-test (zero dependencies)
-        run: node self-test.js
-
-      - name: Install dev dependencies
+      - name: Install dependencies
         run: npm install
+
+      - name: Self-test
+        run: node self-test.js
 
       - name: Integration tests
         run: npm run test:integration
