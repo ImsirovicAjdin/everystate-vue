@@ -41,7 +41,7 @@
     "test:i": "node tests/vue.test.js"
   },
   "devDependencies": {
-    "@everystate/core": "^1.0.0",
+    "@everystate/core": "^1.0.8",
     "@everystate/test": "^1.0.0"
   },
   "files": [
