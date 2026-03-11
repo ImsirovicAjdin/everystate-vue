@@ -35,7 +35,7 @@ export function usePath(path: string): ComputedRef<any>;
 
 /**
  * Returns a stable function that publishes a value to a path.
- * Does not need to be reactive — it just writes to the store.
+ * Does not need to be reactive - it just writes to the store.
  *
  * @param path - Dot-separated intent path (e.g. 'intent.addTask')
  * @returns A setter function

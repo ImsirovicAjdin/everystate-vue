@@ -60,7 +60,7 @@ export function usePath(path) {
 
 /**
  * useIntent: returns a stable function that publishes a value to a path.
- * Does not need to be reactive — it just writes to the store.
+ * Does not need to be reactive - it just writes to the store.
  *
  * @param {string} path - Dot-separated intent path (e.g. 'intent.addTask')
  * @returns {(value: any) => any} A setter function
