@@ -1,4 +1,4 @@
-# @everystate/vue v1.0.5
+# @everystate/vue v1.0.6
 
 [![Tests](https://github.com/ImsirovicAjdin/everystate-vue/actions/workflows/tests.yml/badge.svg)](https://github.com/ImsirovicAjdin/everystate-vue/actions/workflows/tests.yml)
 [![npm version](https://img.shields.io/npm/v/@everystate/vue?color=green&label=npm)](https://www.npmjs.com/package/@everystate/vue)

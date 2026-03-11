@@ -1,6 +1,6 @@
 {
   "name": "@everystate/vue",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "EveryState Vue: Vue 3 adapter with provideStore, usePath, useIntent, useWildcard, useAsync composables",
   "type": "module",
   "main": "index.js",
